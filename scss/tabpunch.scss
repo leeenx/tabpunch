@@ -1,0 +1,24 @@
+@include "svgToBase64";
+
+@mixin tabpunch($w: 13, $h: 6.5, $rootFont: null, $cw: 375, $ch: 200) {
+	// w/h 镂空小三角的宽高
+	// cw/ch 容器的宽高 -- 默认是 375/200
+	// $rootFont 即 rem 要使用到的 root font-size。
+	$unit: unit($w);
+	@if( "rem" == $unit and (null == $rootFont or "" == $rootFont) ) {
+		$rootFont: 20; // 默认是 20px
+	}
+	@else {
+		$rootFont: 1;
+	}
+	$w: $w * 2 * $rootFont / ($w*0 + 1);
+	$h: $h * 2 * $rootFont / ($h*0 + 1);
+	$cw: $cw * 2 * $rootFont / ($cw*0 + 1);
+	$ch: $ch * 2 * $rootFont / ($ch*0 + 1); // 转回二倍图
+	@if(unitless($w)) {
+		//不带单位，默认是 px
+		$unit: "px";
+	}
+
+	mask: url(#{svgToBase64('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" viewBox="0 0 #{$cw} #{$ch}"><path d="M0,0 L#{$cw},0 L#{$cw},#{$ch} L#{$cw/2 + $w/2},#{$ch} L#{$cw/2},#{$ch - $h}, L#{$cw/2 - $h},#{$ch} L0,#{$ch}Z" fill="#0f0"></path></svg>')}) center bottom / #{($cw/2 + $unit)} #{($ch/2 + $unit)} repeat-x;
+}
