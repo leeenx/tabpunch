@@ -7,6 +7,14 @@
 	$unit: unit($w);
 	@if( "rem" == $unit and (null == $rootFont or "" == $rootFont) ) {
 		$rootFont: 20; // 默认是 20px
+		@if("rem" != unit($cw)) {
+			// 如果 cw 没传入 rem 单位
+			$cw: $cw/$rootFont;
+		}
+		@if("rem" != unit($ch)) {
+			// 如果 ch 没传入 rem 单位
+			$ch: $ch/$rootFont;
+		}
 	}
 	@else {
 		$rootFont: 1;
@@ -19,6 +27,9 @@
 		//不带单位，默认是 px
 		$unit: "px";
 	}
-
-	mask: url(#{svgToBase64('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" viewBox="0 0 #{$cw} #{$ch}"><path d="M0,0 L#{$cw},0 L#{$cw},#{$ch} L#{$cw/2 + $w/2},#{$ch} L#{$cw/2},#{$ch - $h}, L#{$cw/2 - $h},#{$ch} L0,#{$ch}Z" fill="#0f0"></path></svg>')}) center bottom / #{($cw/2 + $unit)} #{($ch/2 + $unit)} repeat-x;
+	$svg: '<svg viewBox="0 0 #{$cw} #{$ch}">
+			<path d="M0,0 L#{$cw},0 L#{$cw},#{$ch} L#{$cw/2 + $w/2},#{$ch} L#{$cw/2},#{$ch - $h}, L#{$cw/2 - $h},#{$ch} L0,#{$ch}Z" fill="#0f0"></path>
+		</svg>';
+	mask: url(#{svgToBase64($svg)}) center bottom / #{($cw/2 + $unit)} #{($ch/2 + $unit)} repeat-x;
+	// mask-size: #{($cw/2 + $unit)} #{($ch/2 + $unit)};
 }
