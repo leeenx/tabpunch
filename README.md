@@ -1,6 +1,6 @@
 # tabpunch 简介
 
-一个实现 tab 小三角打孔的 sass 方法。依赖 (svgToBase64)[https://github.com/leeenx/svgToBase64] 库。
+一个实现 tab 小三角打孔的 sass 方法。依赖 (sass-svg)[https://github.com/leeenx/sass-svg] 库。
 
 ## tabpunch 用法
 
